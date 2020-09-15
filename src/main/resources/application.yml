@@ -4,3 +4,7 @@ server:
 spring:
   application:
     name: weather-harvester
+
+station:
+  url: http://31.178.188.249:8080/
+  token: ${BASIC_TOKEN}
