@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
-import pw.homeweather.weatherharvester.entity.BasicMeasurement;
-import reactor.core.publisher.DirectProcessor;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.tcp.TcpClient;
 
@@ -32,9 +30,9 @@ public class WebClientConfig {
         TcpClient tcpClient = TcpClient
                 .create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
-                .doOnConnected(connection -> {
-                    connection.addHandlerLast(new ReadTimeoutHandler(5, TimeUnit.SECONDS));
-                });
+                .doOnConnected(connection ->
+                    connection.addHandlerLast(new ReadTimeoutHandler(5, TimeUnit.SECONDS))
+                );
 
         return WebClient.builder()
                 .baseUrl(baseUrl)
