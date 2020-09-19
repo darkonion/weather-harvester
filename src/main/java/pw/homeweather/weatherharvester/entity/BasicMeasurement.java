@@ -1,7 +1,9 @@
 package pw.homeweather.weatherharvester.entity;
 
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @ToString
+@EqualsAndHashCode(exclude = "date")
 public class BasicMeasurement {
 
     @Id
@@ -22,4 +25,10 @@ public class BasicMeasurement {
     private Double lux;
 
     private LocalDateTime date;
+
+    private static final BasicMeasurement bm = new BasicMeasurement();
+
+    public boolean isNotEmpty() {
+        return !this.equals(bm);
+    }
 }
