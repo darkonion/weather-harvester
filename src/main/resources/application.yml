@@ -4,12 +4,31 @@ server:
 spring:
   application:
     name: weather-harvester
-
+  profiles:
+    active: dev
 
 station:
   url: http://31.178.188.249:8080/
   token: ${BASIC_TOKEN}
 
+---
+
+spring:
+  profiles: test
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5433/${POSTGRES_DB}
+    username: ${POSTGRES_USER_TEST}
+    password: ${POSTGRES_PASSWORD_TEST}
+
 #logging:
 #  level:
 #    root: debug
+
+---
+
+spring:
+  profiles: dev
+  r2dbc:
+    url: r2dbc:postgresql://${POSTGRES_URL}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}

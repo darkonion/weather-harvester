@@ -2,11 +2,10 @@ package pw.homeweather.weatherharvester.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pw.homeweather.weatherharvester.entity.BasicMeasurement;
 import pw.homeweather.weatherharvester.repositories.BasicMeasurementRepository;
 import reactor.core.publisher.Mono;
-
-import javax.transaction.Transactional;
 
 
 @Slf4j
@@ -20,11 +19,13 @@ public class BasicMeasurementService {
     }
 
     @Transactional
-    public void persistMeasurement(Mono<BasicMeasurement> basicMeasurement) {
-        basicMeasurementRepository.persistBasicMeasurement(
-                basicMeasurement.filter(BasicMeasurement::isNotEmpty)
-        );
-
-
+    public Mono<BasicMeasurement> persistMeasurement(Mono<BasicMeasurement> basicMeasurement) {
+        return basicMeasurement
+                .filter(BasicMeasurement::isNotEmpty)
+                .flatMap(basicMeasurementRepository::save)
+                .flatMap(m -> {
+                    log.info("Persisted: " + m);
+                    return Mono.fromSupplier(() -> m);
+                });
     }
 }

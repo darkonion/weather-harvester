@@ -1,18 +1,14 @@
 package pw.homeweather.weatherharvester.entity;
 
+import lombok.*;
+import org.springframework.data.annotation.Id;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
-@Entity
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = "date")
 public class BasicMeasurement {
 

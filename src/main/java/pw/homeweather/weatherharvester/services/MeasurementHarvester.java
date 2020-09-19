@@ -30,28 +30,32 @@ public class MeasurementHarvester {
         this.measurementService = measurementService;
     }
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 5 * 60 * 1000)
     public void harvest() {
         WebClient.RequestHeadersSpec<?> uri = webClient.get().uri(BASIC_MEASUREMENT_URI);
-
+        Mono<BasicMeasurement> basicMeasurement;
         try {
-            Mono<BasicMeasurement> basicMeasurement = callForMeasurement(uri);
-            measurementService.persistMeasurement(basicMeasurement);
+            basicMeasurement = callForMeasurement(uri);
         } catch (Exception e) {
             log.info("Cannot connect to Weather Station, error: " + e.getMessage());
             log.debug(Arrays.toString(e.getStackTrace()));
+            return;
         }
+        measurementService.persistMeasurement(basicMeasurement).subscribe();
     }
 
     private Mono<BasicMeasurement> callForMeasurement(WebClient.RequestHeadersSpec<?> uri) {
         return uri.retrieve()
                 .bodyToMono(BasicMeasurement.class)
-                .retryWhen(getRetryBackoffSpec());
+                .retryWhen(getRetryBackoffSpec())
+                .onErrorResume(e -> {
+                    log.info("Timeout reached during connection!");
+                    return Mono.just(new BasicMeasurement());});
     }
 
     private RetryBackoffSpec getRetryBackoffSpec() {
         return Retry
-                .fixedDelay(3, ofSeconds(7))
+                .fixedDelay(3, ofSeconds(5))
                 .doBeforeRetry(r -> log.info(
                         format("Retrying call, due to %s, attempt: %d", r.failure().getMessage(), r.totalRetries())
                 ));

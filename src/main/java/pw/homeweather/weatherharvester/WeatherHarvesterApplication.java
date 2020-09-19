@@ -2,12 +2,13 @@ package pw.homeweather.weatherharvester;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.reactive.function.client.WebClient;
 
-@SpringBootApplication
+
 @EnableScheduling
+@EnableR2dbcRepositories
+@SpringBootApplication
 public class WeatherHarvesterApplication {
 
 	public static void main(String[] args) {
