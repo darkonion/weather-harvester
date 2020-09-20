@@ -1,4 +1,4 @@
-package pw.homeweather.weatherharvester;
+package pl.homeweather.weatherharvester;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

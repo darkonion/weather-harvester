@@ -1,17 +1,16 @@
-package pw.homeweather.weatherharvester.services;
+package pl.homeweather.weatherharvester.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import pw.homeweather.weatherharvester.entity.BasicMeasurement;
+import pl.homeweather.weatherharvester.entity.BasicMeasurement;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 import reactor.util.retry.RetryBackoffSpec;
 
 import java.util.Arrays;
 
-import static java.lang.String.format;
 import static java.time.Duration.ofSeconds;
 
 
@@ -24,20 +23,20 @@ public class MeasurementHarvester {
 
     private static final String BASIC_MEASUREMENT_URI = "/basic";
 
-
     public MeasurementHarvester(WebClient webClient, BasicMeasurementService measurementService) {
         this.webClient = webClient;
         this.measurementService = measurementService;
     }
 
-    @Scheduled(fixedRate = 5 * 60 * 1000)
+
+    @Scheduled(cron = "${station.cron}")
     public void harvest() {
         WebClient.RequestHeadersSpec<?> uri = webClient.get().uri(BASIC_MEASUREMENT_URI);
         Mono<BasicMeasurement> basicMeasurement;
         try {
             basicMeasurement = callForMeasurement(uri);
         } catch (Exception e) {
-            log.info("Cannot connect to Weather Station, error: " + e.getMessage());
+            log.info("Cannot connect to Weather Station, error: {}", e.getMessage());
             log.debug(Arrays.toString(e.getStackTrace()));
             return;
         }
@@ -57,7 +56,7 @@ public class MeasurementHarvester {
         return Retry
                 .fixedDelay(3, ofSeconds(5))
                 .doBeforeRetry(r -> log.info(
-                        format("Retrying call, due to %s, attempt: %d", r.failure().getMessage(), r.totalRetries())
-                ));
+                        "Retrying call, due to {}, attempt: {}", r.failure().getMessage(), r.totalRetries())
+                );
     }
 }

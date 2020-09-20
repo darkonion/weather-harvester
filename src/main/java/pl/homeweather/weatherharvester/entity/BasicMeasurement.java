@@ -1,4 +1,4 @@
-package pw.homeweather.weatherharvester.entity;
+package pl.homeweather.weatherharvester.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor

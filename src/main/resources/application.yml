@@ -6,10 +6,26 @@ spring:
     name: weather-harvester
   profiles:
     active: dev
+  security:
+    user:
+      name: ${MAIN_USER}
+      password: ${MAIN_PASSWORD}
 
 station:
   url: http://31.178.188.249:8080/
   token: ${BASIC_TOKEN}
+  cron: ${CRON}
+
+management:
+  endpoint:
+    env:
+      post:
+        enabled: true
+
+  endpoints:
+    web:
+      exposure:
+        include: refresh, env, health
 
 ---
 

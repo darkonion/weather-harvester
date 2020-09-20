@@ -1,4 +1,4 @@
-package pw.homeweather.weatherharvester.config;
+package pl.homeweather.weatherharvester.config;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
