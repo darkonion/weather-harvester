@@ -1,5 +1,6 @@
 package pl.homeweather.weatherharvester.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -25,6 +26,7 @@ public class BasicMeasurement {
 
     private static final BasicMeasurement bm = new BasicMeasurement();
 
+    @JsonIgnore
     public boolean isNotEmpty() {
         return !this.equals(bm);
     }

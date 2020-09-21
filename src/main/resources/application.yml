@@ -5,7 +5,7 @@ spring:
   application:
     name: weather-harvester
   profiles:
-    active: dev
+    active: prod
   security:
     user:
       name: ${MAIN_USER}
@@ -30,7 +30,7 @@ management:
 ---
 
 spring:
-  profiles: test
+  profiles: dev
   r2dbc:
     url: r2dbc:postgresql://localhost:5433/${POSTGRES_DB}
     username: ${POSTGRES_USER_TEST}
@@ -43,7 +43,7 @@ spring:
 ---
 
 spring:
-  profiles: dev
+  profiles: prod
   r2dbc:
     url: r2dbc:postgresql://${POSTGRES_URL}/${POSTGRES_DB}
     username: ${POSTGRES_USER}

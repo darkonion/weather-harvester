@@ -3,11 +3,11 @@ package pl.homeweather.weatherharvester.services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.homeweather.weatherharvester.controllers.BasicQuery;
 import pl.homeweather.weatherharvester.entity.BasicMeasurement;
 import pl.homeweather.weatherharvester.repositories.BasicMeasurementRepository;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -32,16 +32,16 @@ public class BasicMeasurementService {
                 });
     }
 
-    public Mono<List<BasicMeasurement>> getMeasurementsBetween(LocalDateTime from, LocalDateTime to) {
-        log.info("Basic Measurement Data request from {} to {}", from.toString(), to.toString());
+    public Mono<List<BasicMeasurement>> getMeasurementsBetween(BasicQuery basicQuery) {
+        log.info("Basic Measurement Data request {}", basicQuery);
+
         return basicMeasurementRepository
-                .getMeasurementsInTimePeriodBetween(from, to)
+                .getMeasurementsInTimePeriodBetween(basicQuery)
                 .collectList()
                 .flatMap(this::normalizeMeasurements);
     }
 
     private Mono<List<BasicMeasurement>> normalizeMeasurements(List<BasicMeasurement> measurements) {
-        //TODO
         return Mono.just(measurements);
     }
 }
