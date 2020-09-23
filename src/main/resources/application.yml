@@ -14,7 +14,8 @@ spring:
 station:
   url: http://31.178.188.249:8080/
   token: ${BASIC_TOKEN}
-  cron: ${CRON}
+  basic-cron: ${BASIC_CRON}
+  air-cron: ${AIR_CRON}
 
 management:
   endpoint:

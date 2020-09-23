@@ -42,6 +42,19 @@ public class BasicMeasurementService {
     }
 
     private Mono<List<BasicMeasurement>> normalizeMeasurements(List<BasicMeasurement> measurements) {
+        //TODO
         return Mono.just(measurements);
+    }
+
+    public Mono<Double> getLatestTemperatureMeasurement() {
+        return basicMeasurementRepository.getLatestTemperatureMeasurement();
+    }
+
+    public Mono<Double> getLatestPressureMeasurement() {
+        return basicMeasurementRepository.getLatestPressureMeasurement();
+    }
+
+    public Mono<Double> getLatestHumidityMeasurement() {
+        return basicMeasurementRepository.getLatestHumidityMeasurement();
     }
 }

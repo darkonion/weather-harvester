@@ -15,11 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class MainController {
+public class BasicMeasurementController {
 
     private final BasicMeasurementService basicService;
 
-    public MainController(BasicMeasurementService basicService) {
+    public BasicMeasurementController(BasicMeasurementService basicService) {
         this.basicService = basicService;
     }
 
@@ -31,5 +31,20 @@ public class MainController {
 
         return basicService.getMeasurementsBetween(
                 BasicQuery.getInstance(dateFrom, dateTo, interval));
+    }
+
+    @GetMapping("/temperature")
+    public Mono<Double> getLatestTemperatureMeasurement() {
+        return basicService.getLatestTemperatureMeasurement();
+    }
+
+    @GetMapping("/pressure")
+    public Mono<Double> getLatestPressureMeasurement() {
+        return basicService.getLatestPressureMeasurement();
+    }
+
+    @GetMapping("/humidity")
+    public Mono<Double> getLatestHumidityMeasurement() {
+        return basicService.getLatestHumidityMeasurement();
     }
 }
