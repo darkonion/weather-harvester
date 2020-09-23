@@ -25,7 +25,7 @@ public interface BasicMeasurementRepository extends ReactiveCrudRepository<Basic
             "ORDER BY id DESC LIMIT 1")
     Mono<Double> getLatestPressureMeasurement();
 
-    @Query("Select humidityFROM basic_measurement " +
+    @Query("Select humidity FROM basic_measurement " +
             "ORDER BY id DESC LIMIT 1")
     Mono<Double> getLatestHumidityMeasurement();
 

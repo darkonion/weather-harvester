@@ -2,7 +2,6 @@ package pl.homeweather.weatherharvester.controllers;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.homeweather.weatherharvester.entity.AirPurityMeasurement;
@@ -22,7 +21,7 @@ public class AirPurityMeasurementController {
         this.airPurityService = airPurityService;
     }
 
-    @GetMapping("/air")
+//    @GetMapping("/air")
     public Mono<List<AirPurityMeasurement>> getAirMeasurement(
             @RequestParam(value = "from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
             @RequestParam(value = "to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo,
