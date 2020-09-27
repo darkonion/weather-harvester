@@ -1,9 +1,7 @@
 package pl.homeweather.weatherharvester.controllers;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.homeweather.weatherharvester.entity.AirPurityMeasurement;
 import pl.homeweather.weatherharvester.services.AirPurityService;
 import reactor.core.publisher.Mono;
@@ -11,7 +9,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class AirPurityMeasurementController {
 
@@ -21,7 +19,7 @@ public class AirPurityMeasurementController {
         this.airPurityService = airPurityService;
     }
 
-//    @GetMapping("/air")
+    @GetMapping("/air-full")
     public Mono<List<AirPurityMeasurement>> getAirMeasurement(
             @RequestParam(value = "from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
             @RequestParam(value = "to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo,
@@ -29,5 +27,10 @@ public class AirPurityMeasurementController {
 
         return airPurityService.getMeasurementsBetween(
                 BasicQuery.getInstance(dateFrom, dateTo, interval));
+    }
+
+    @GetMapping("/air")
+    public Mono<AirPurityMeasurement> getLatestMeasurement() {
+        return airPurityService.getLatestMeasurement();
     }
 }

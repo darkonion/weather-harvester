@@ -35,10 +35,9 @@ public class MeasurementHarvester {
 
     @Scheduled(cron = "${station.basic-cron}")
     public void harvestBasicMeasurement() {
-        WebClient.RequestHeadersSpec<?> uri = webClient.get().uri(BASIC_MEASUREMENT_URI);
         Mono<BasicMeasurement> basicMeasurement;
         try {
-            basicMeasurement = callForBasicMeasurement(uri);
+            basicMeasurement = callForBasicMeasurement();
         } catch (Exception e) {
             log.info("Cannot connect to Weather Station, error: {}", e.getMessage());
             log.debug(Arrays.toString(e.getStackTrace()));
@@ -47,12 +46,12 @@ public class MeasurementHarvester {
         measurementService.persistMeasurement(basicMeasurement).subscribe();
     }
 
-    //@Scheduled(cron = "${station.air-cron}")
+    @Scheduled(cron = "${station.air-cron}")
     public void harvestAirPurityMeasurement() {
-        WebClient.RequestHeadersSpec<?> uri = webClient.get().uri(AIR_MEASUREMENT_URI);
+        log.info("Starting harvesting air quality measurement");
         Mono<AirPurityMeasurement> airPurityMeasurement;
         try {
-            airPurityMeasurement = callForAirMeasurement(uri);
+            airPurityMeasurement = callForAirMeasurement();
         } catch (Exception e) {
             log.info("Cannot connect to Weather Station, error: {}", e.getMessage());
             log.debug(Arrays.toString(e.getStackTrace()));
@@ -61,8 +60,9 @@ public class MeasurementHarvester {
         airPurityService.persistMeasurement(airPurityMeasurement).subscribe();
     }
 
-    private Mono<BasicMeasurement> callForBasicMeasurement(WebClient.RequestHeadersSpec<?> uri) {
-        return uri.retrieve()
+    private Mono<BasicMeasurement> callForBasicMeasurement() {
+        return webClient.get().uri(BASIC_MEASUREMENT_URI)
+                .retrieve()
                 .bodyToMono(BasicMeasurement.class)
                 .retryWhen(getRetryBackoffSpec())
                 .onErrorResume(e -> {
@@ -71,8 +71,9 @@ public class MeasurementHarvester {
                 });
     }
 
-    private Mono<AirPurityMeasurement> callForAirMeasurement(WebClient.RequestHeadersSpec<?> uri) {
-        return uri.retrieve()
+    private Mono<AirPurityMeasurement> callForAirMeasurement() {
+        return webClient.get().uri(AIR_MEASUREMENT_URI)
+                .retrieve()
                 .bodyToMono(AirPurityMeasurement.class)
                 .retryWhen(getRetryBackoffSpec())
                 .onErrorResume(e -> {

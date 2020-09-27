@@ -17,9 +17,9 @@ public class AirPurityMeasurement {
     @Id
     private Long id;
 
-    private Double pm1;
-    private Double pm25;
-    private Double pm10;
+    private Integer pm1;
+    private Integer pm25;
+    private Integer pm10;
 
     private LocalDateTime date;
 

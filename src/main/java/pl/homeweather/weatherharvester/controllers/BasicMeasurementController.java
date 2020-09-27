@@ -1,10 +1,7 @@
 package pl.homeweather.weatherharvester.controllers;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.homeweather.weatherharvester.entity.BasicMeasurement;
 import pl.homeweather.weatherharvester.services.BasicMeasurementService;
 import reactor.core.publisher.Mono;
@@ -23,7 +20,7 @@ public class BasicMeasurementController {
         this.basicService = basicService;
     }
 
-    @GetMapping("/basic")
+    @GetMapping("/basic-full")
     public Mono<List<BasicMeasurement>> getBasicMeasurement(
             @RequestParam(value = "from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
             @RequestParam(value = "to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo,
@@ -31,6 +28,11 @@ public class BasicMeasurementController {
 
         return basicService.getMeasurementsBetween(
                 BasicQuery.getInstance(dateFrom, dateTo, interval));
+    }
+
+    @GetMapping("/basic")
+    public Mono<BasicMeasurement> getLatestBasicMeasurement() {
+        return basicService.getLatestBasicMeasurement();
     }
 
     @GetMapping("/temperature")

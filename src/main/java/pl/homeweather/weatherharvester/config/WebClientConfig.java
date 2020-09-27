@@ -18,20 +18,15 @@ import static java.lang.String.format;
 @Configuration
 public class WebClientConfig {
 
-    @Value("${station.url}")
-    private String baseUrl;
-
-    @Value("${station.token}")
-    private String token;
-
 
     @Bean
-    public WebClient webClient() {
+    public WebClient webClient(@Value("${station.url}") String baseUrl,
+                               @Value("${station.token}") String token) {
         TcpClient tcpClient = TcpClient
                 .create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
                 .doOnConnected(connection ->
-                    connection.addHandlerLast(new ReadTimeoutHandler(5, TimeUnit.SECONDS))
+                    connection.addHandlerLast(new ReadTimeoutHandler(1, TimeUnit.MINUTES))
                 );
 
         return WebClient.builder()

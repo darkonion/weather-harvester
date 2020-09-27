@@ -46,6 +46,10 @@ public class BasicMeasurementService {
         return Mono.just(measurements);
     }
 
+    public Mono<BasicMeasurement> getLatestBasicMeasurement() {
+        return basicMeasurementRepository.getLatestBasicMeasurement();
+    }
+
     public Mono<Double> getLatestTemperatureMeasurement() {
         return basicMeasurementRepository.getLatestTemperatureMeasurement();
     }

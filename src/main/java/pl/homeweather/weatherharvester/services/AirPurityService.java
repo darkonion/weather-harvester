@@ -40,6 +40,10 @@ public class AirPurityService {
                 .flatMap(this::normalizeMeasurements);
     }
 
+    public Mono<AirPurityMeasurement> getLatestMeasurement() {
+        return airPurityMeasurementRepository.getLatestMeasurement();
+    }
+
     private Mono<List<AirPurityMeasurement>> normalizeMeasurements(List<AirPurityMeasurement> measurements) {
         //TODO
         return Mono.just(measurements);
