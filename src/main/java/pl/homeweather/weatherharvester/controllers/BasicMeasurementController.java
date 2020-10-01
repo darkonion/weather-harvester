@@ -35,6 +35,13 @@ public class BasicMeasurementController {
         return basicService.getLatestBasicMeasurement();
     }
 
+    @PostMapping("/basic")
+    public void saveBasicMeasurement(@RequestBody Mono<BasicMeasurement> basicMeasurement) {
+        basicService
+                .persistMeasurement(basicMeasurement)
+                .subscribe();
+    }
+
     @GetMapping("/temperature")
     public Mono<Double> getLatestTemperatureMeasurement() {
         return basicService.getLatestTemperatureMeasurement();

@@ -15,7 +15,9 @@ public class WebSecurityConfig implements WebFluxConfigurer {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http.authorizeExchange()
+        return http
+                .csrf().disable()
+                .authorizeExchange()
                 .pathMatchers("/actuator/health").permitAll()
                 .pathMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                 .anyExchange().authenticated()
@@ -26,7 +28,7 @@ public class WebSecurityConfig implements WebFluxConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedMethods("GET")
+                .allowedMethods("GET", "POST")
                 .allowedOrigins("http://localhost:4200", "http://80.211.242.104");
     }
 }

@@ -11,12 +11,6 @@ spring:
       name: ${MAIN_USER}
       password: ${MAIN_PASSWORD}
 
-station:
-  url: http://31.178.188.249:8080/
-  token: ${BASIC_TOKEN}
-  basic-cron: ${BASIC_CRON}
-  air-cron: ${AIR_CRON}
-
 management:
   endpoint:
     env:

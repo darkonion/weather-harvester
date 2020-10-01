@@ -10,7 +10,7 @@
     </parent>
     <groupId>pw.homeweather</groupId>
     <artifactId>weather-harvester</artifactId>
-    <version>0.0.19-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
     <name>weather-harvester</name>
     <description>Weather Harvester</description>
 
