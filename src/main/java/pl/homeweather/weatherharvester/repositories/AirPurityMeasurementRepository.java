@@ -7,6 +7,8 @@ import pl.homeweather.weatherharvester.entity.AirPurityMeasurement;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+
 public interface AirPurityMeasurementRepository extends ReactiveCrudRepository<AirPurityMeasurement, Long> {
 
     @Query("SELECT * FROM air_purity_measurement " +
@@ -18,4 +20,12 @@ public interface AirPurityMeasurementRepository extends ReactiveCrudRepository<A
     @Query("SELECT * FROM air_purity_measurement " +
             "ORDER BY id DESC LIMIT 1")
     Mono<AirPurityMeasurement> getLatestMeasurement();
+
+    @Query("SELECT count(id) FROM air_purity_measurement " +
+            "WHERE date < :#{#time}")
+    Mono<Integer> getNumberOnMeasurementsToClean(LocalDateTime time);
+
+    @Query("DELETE FROM air_purity_measurement " +
+            "WHERE date < :#{#time}")
+    void cleanupMeasurementsOlderThan(LocalDateTime time);
 }
