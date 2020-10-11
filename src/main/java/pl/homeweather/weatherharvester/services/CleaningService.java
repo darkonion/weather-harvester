@@ -2,6 +2,7 @@ package pl.homeweather.weatherharvester.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.homeweather.weatherharvester.repositories.AirPurityMeasurementRepository;
@@ -25,7 +26,7 @@ public class CleaningService {
     }
 
     @Transactional
-//    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "0 0 0 1 1/1 *")
     public void doCleanup() {
         LocalDateTime cleanupCutoffDate = LocalDateTime.now()
                 .minusMonths(months);
