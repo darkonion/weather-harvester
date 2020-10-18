@@ -20,6 +20,7 @@ public class WebSecurityConfig implements WebFluxConfigurer {
                 .authorizeExchange()
                 .pathMatchers("/actuator/health").permitAll()
                 .pathMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS, "/settings/**").permitAll()
                 .anyExchange().authenticated()
                 .and().formLogin()
                 .and().httpBasic().and().build();
@@ -30,5 +31,9 @@ public class WebSecurityConfig implements WebFluxConfigurer {
         registry.addMapping("/api/**")
                 .allowedMethods("GET", "POST")
                 .allowedOrigins("http://localhost:4200", "http://80.211.242.104");
+        registry.addMapping("/settings/**")
+                .allowedMethods("GET", "PUT")
+                .allowedOrigins("http://localhost:4200", "http://80.211.242.104");
+
     }
 }

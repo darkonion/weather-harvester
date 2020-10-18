@@ -35,9 +35,9 @@ public class AirPurityMeasurementController {
     }
 
     @PostMapping("/air")
-    public void saveBasicMeasurement(@RequestBody Mono<AirPurityMeasurement> airMeasurement) {
-        airPurityService
+    public Mono<Void> saveBasicMeasurement(@RequestBody Mono<AirPurityMeasurement> airMeasurement) {
+        return airPurityService
                 .persistMeasurement(airMeasurement)
-                .subscribe();
+                .then();
     }
 }

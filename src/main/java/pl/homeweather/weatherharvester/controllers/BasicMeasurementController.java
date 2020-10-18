@@ -36,10 +36,10 @@ public class BasicMeasurementController {
     }
 
     @PostMapping("/basic")
-    public void saveBasicMeasurement(@RequestBody Mono<BasicMeasurement> basicMeasurement) {
-        basicService
+    public Mono<Void> saveBasicMeasurement(@RequestBody Mono<BasicMeasurement> basicMeasurement) {
+        return basicService
                 .persistMeasurement(basicMeasurement)
-                .subscribe();
+                .then();
     }
 
     @GetMapping("/temperature")
