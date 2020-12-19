@@ -35,6 +35,9 @@ spring:
     username: ${POSTGRES_USER_TEST}
     password: ${POSTGRES_PASSWORD_TEST}
 
+cors:
+  allowed-origin: "http://localhost:4200"
+
 #logging:
 #  level:
 #    root: debug
@@ -47,3 +50,6 @@ spring:
     url: r2dbc:postgresql://${POSTGRES_URL}/${POSTGRES_DB}
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
+
+cors:
+  allowed-origin: "http://80.211.242.104"

@@ -1,5 +1,6 @@
 package pl.homeweather.weatherharvester.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,6 +13,9 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 @EnableWebFluxSecurity
 @Configuration
 public class WebSecurityConfig implements WebFluxConfigurer {
+
+    @Value("${cors.allowed-origin}")
+    private String corsAllowedOrigin;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
@@ -30,10 +34,9 @@ public class WebSecurityConfig implements WebFluxConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedMethods("GET", "POST")
-                .allowedOrigins("http://localhost:4200", "http://80.211.242.104");
-        registry.addMapping("/settings/**")
+                .allowedOrigins(corsAllowedOrigin);
+        registry.addMapping("/settings/cron")
                 .allowedMethods("GET", "PUT")
-                .allowedOrigins("http://localhost:4200", "http://80.211.242.104");
-
+                .allowedOrigins(corsAllowedOrigin);
     }
 }
