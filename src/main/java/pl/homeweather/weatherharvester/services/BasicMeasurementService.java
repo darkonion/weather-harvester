@@ -26,9 +26,9 @@ public class BasicMeasurementService {
         return basicMeasurement
                 .filter(BasicMeasurement::isNotEmpty)
                 .flatMap(basicMeasurementRepository::save)
-                .flatMap(m -> {
+                .map(m -> {
                     log.info("Persisted: " + m);
-                    return Mono.fromSupplier(() -> m);
+                    return m;
                 });
     }
 

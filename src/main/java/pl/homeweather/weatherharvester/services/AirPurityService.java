@@ -25,9 +25,9 @@ public class AirPurityService {
         return airMeasurement
                 .filter(AirPurityMeasurement::isNotEmpty)
                 .flatMap(airPurityMeasurementRepository::save)
-                .flatMap(m -> {
+                .map(m -> {
                     log.info("Persisted: " + m);
-                    return Mono.fromSupplier(() -> m);
+                    return m;
                 });
     }
 
