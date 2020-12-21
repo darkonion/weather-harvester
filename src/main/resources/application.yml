@@ -6,10 +6,12 @@ spring:
     name: weather-harvester
   profiles:
     active: prod
-  security:
-    user:
-      name: ${MAIN_USER}
-      password: ${MAIN_PASSWORD}
+
+credentials:
+  user: ${MAIN_USER}
+  user_password: ${MAIN_PASSWORD}
+  admin: ${ADMIN}
+  admin_password: ${ADMIN_PASSWORD}
 
 management:
   endpoint:
