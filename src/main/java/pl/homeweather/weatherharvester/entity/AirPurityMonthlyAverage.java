@@ -1,23 +1,20 @@
 package pl.homeweather.weatherharvester.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
-
-import java.time.YearMonth;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
-@NoArgsConstructor
-public class AirPurityMonthlyAverage {
+public class AirPurityMonthlyAverage extends AirPurityMeasurement {
 
-    @Id
-    private Long id;
-
-    private Integer pm1;
-    private Integer pm25;
-    private Integer pm10;
-
-    private YearMonth date;
+    @Override
+    public String toString() {
+        return String.format("%s(id=%d, date=%s, pm1=%d, pm25=%d, pm10=%d)",
+                this.getClass().getSimpleName(),
+                super.getId(),
+                super.getDate(),
+                super.getPm1(),
+                super.getPm25(),
+                super.getPm10());
+    }
 }

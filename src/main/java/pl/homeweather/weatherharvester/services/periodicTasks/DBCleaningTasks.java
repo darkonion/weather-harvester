@@ -1,4 +1,4 @@
-package pl.homeweather.weatherharvester.services;
+package pl.homeweather.weatherharvester.services.periodicTasks;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
-public class CleaningService {
+public class DBCleaningTasks {
 
     @Value("${harvester.cleanup.months}")
     private Integer months;
@@ -20,7 +20,7 @@ public class CleaningService {
     private final AirPurityMeasurementRepository airPurityMeasurementRepository;
     private final BasicMeasurementRepository basicMeasurementRepository;
 
-    public CleaningService(AirPurityMeasurementRepository airPurityMeasurementRepository, BasicMeasurementRepository basicMeasurementRepository) {
+    public DBCleaningTasks(AirPurityMeasurementRepository airPurityMeasurementRepository, BasicMeasurementRepository basicMeasurementRepository) {
         this.airPurityMeasurementRepository = airPurityMeasurementRepository;
         this.basicMeasurementRepository = basicMeasurementRepository;
     }
