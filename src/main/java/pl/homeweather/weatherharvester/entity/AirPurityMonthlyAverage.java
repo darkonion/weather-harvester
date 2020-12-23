@@ -17,4 +17,11 @@ public class AirPurityMonthlyAverage extends AirPurityMeasurement {
                 super.getPm25(),
                 super.getPm10());
     }
+
+    private static final AirPurityMonthlyAverage ap = new AirPurityMonthlyAverage();
+
+    @Override
+    public boolean isNotEmpty() {
+        return !this.equals(ap);
+    }
 }

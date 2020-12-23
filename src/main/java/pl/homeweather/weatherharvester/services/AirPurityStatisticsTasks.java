@@ -1,4 +1,4 @@
-package pl.homeweather.weatherharvester.services.periodictasks;
+package pl.homeweather.weatherharvester.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -51,6 +51,7 @@ public class AirPurityStatisticsTasks {
 
     private Mono<AirPurityDailyAverage> persistDailyAverage(LocalDateTime from, LocalDateTime to) {
         return captureDailyAverage(from, to)
+                .filter(AirPurityDailyAverage::isNotEmpty)
                 .flatMap(dailyAverageRepository::save)
                 .map(saved -> {
                     log.info("Persisted: {}", saved);
@@ -60,6 +61,7 @@ public class AirPurityStatisticsTasks {
 
     private Mono<AirPurityMonthlyAverage> persistMonthlyAverage(LocalDateTime from, LocalDateTime to) {
         return captureMonthlyAverage(from, to)
+                .filter(AirPurityMonthlyAverage::isNotEmpty)
                 .flatMap(monthlyAverageRepository::save)
                 .map(saved -> {
                     log.info("Persisted: {}", saved);
@@ -94,6 +96,10 @@ public class AirPurityStatisticsTasks {
         int pm25average = 0;
         int pm10average = 0;
         int size = measurements.size();
+
+        if (size == 0) {
+            return average;
+        }
 
         for (N measurement : measurements) {
             pm1average += ofNullable(measurement.getPm1()).orElse(0);

@@ -18,4 +18,10 @@ public class AirPurityDailyAverage extends AirPurityMeasurement {
                 super.getPm10());
     }
 
+    private static final AirPurityDailyAverage ap = new AirPurityDailyAverage();
+
+    @Override
+    public boolean isNotEmpty() {
+        return !this.equals(ap);
+    }
 }

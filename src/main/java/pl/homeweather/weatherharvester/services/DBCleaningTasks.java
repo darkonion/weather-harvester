@@ -1,4 +1,4 @@
-package pl.homeweather.weatherharvester.services.periodictasks;
+package pl.homeweather.weatherharvester.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
