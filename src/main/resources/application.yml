@@ -33,9 +33,9 @@ harvester:
 spring:
   profiles: dev
   r2dbc:
-    url: r2dbc:postgresql://localhost:5433/${POSTGRES_DB}
-    username: ${POSTGRES_USER_TEST}
-    password: ${POSTGRES_PASSWORD_TEST}
+    url: r2dbc:postgresql://${POSTGRES_URL}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
 
 cors:
   allowed-origin: "http://localhost:4200"
@@ -54,4 +54,4 @@ spring:
     password: ${POSTGRES_PASSWORD}
 
 cors:
-  allowed-origin: "http://80.211.242.104"
+  allowed-origin: "https://weather-pi.eu"
