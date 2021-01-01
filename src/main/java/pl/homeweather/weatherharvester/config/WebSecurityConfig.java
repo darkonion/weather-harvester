@@ -3,6 +3,7 @@ package pl.homeweather.weatherharvester.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -107,6 +108,7 @@ public class WebSecurityConfig implements WebFluxConfigurer {
         CorsConfiguration configurationSettings = new CorsConfiguration();
         configurationSettings.setAllowedOrigins(singletonList(corsAllowedOrigin));
         configurationSettings.setAllowedMethods(Arrays.asList("GET", "PUT"));
+        configurationSettings.setAllowedHeaders(singletonList(HttpHeaders.CONTENT_TYPE));
         configurationSettings.setAllowCredentials(true);
 
         CorsConfiguration configurationLogin = new CorsConfiguration();

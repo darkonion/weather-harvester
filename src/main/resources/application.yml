@@ -5,7 +5,7 @@ spring:
   application:
     name: weather-harvester
   profiles:
-    active: prod
+    active: dev
 
 credentials:
   user: ${MAIN_USER}
