@@ -52,4 +52,9 @@ public class AirPurityStatisticsController {
     public Mono<AirPurityMonthlyAverage> getLatestAirPurityMonthlyAverage() {
         return statisticsService.getLatestMonthlyAverage();
     }
+
+    @GetMapping("/count")
+    public Mono<Integer> getNumberOfMeasurementsInDB() {
+        return statisticsService.getNumberOfMeasurementsInDB();
+    }
 }

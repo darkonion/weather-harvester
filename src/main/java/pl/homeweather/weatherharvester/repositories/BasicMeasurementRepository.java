@@ -39,6 +39,9 @@ public interface BasicMeasurementRepository extends ReactiveCrudRepository<Basic
             "WHERE date < :#{#time}")
     Mono<Integer> getNumberOnMeasurementsToClean(LocalDateTime time);
 
+    @Query("SELECT count(id) FROM basic_measurement")
+    Mono<Integer> getNumberOfMeasurementsInDB();
+
     @Query("DELETE FROM basic_measurement " +
             "WHERE date < :#{#time}")
     void cleanupMeasurementsOlderThan(LocalDateTime time);

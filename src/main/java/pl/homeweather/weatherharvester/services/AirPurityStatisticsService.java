@@ -6,6 +6,7 @@ import pl.homeweather.weatherharvester.controllers.BasicQuery;
 import pl.homeweather.weatherharvester.entity.AirPurityDailyAverage;
 import pl.homeweather.weatherharvester.entity.AirPurityMonthlyAverage;
 import pl.homeweather.weatherharvester.repositories.AirPurityDailyAverageRepository;
+import pl.homeweather.weatherharvester.repositories.AirPurityMeasurementRepository;
 import pl.homeweather.weatherharvester.repositories.AirPurityMonthlyAverageRepository;
 import reactor.core.publisher.Mono;
 
@@ -17,10 +18,12 @@ public class AirPurityStatisticsService {
 
     private final AirPurityDailyAverageRepository dailyAverageRepository;
     private final AirPurityMonthlyAverageRepository monthlyAverageRepository;
+    private final AirPurityMeasurementRepository measurementRepository;
 
-    public AirPurityStatisticsService(AirPurityDailyAverageRepository dailyAverageRepository, AirPurityMonthlyAverageRepository monthlyAverageRepository) {
+    public AirPurityStatisticsService(AirPurityDailyAverageRepository dailyAverageRepository, AirPurityMonthlyAverageRepository monthlyAverageRepository, AirPurityMeasurementRepository measurementRepository) {
         this.dailyAverageRepository = dailyAverageRepository;
         this.monthlyAverageRepository = monthlyAverageRepository;
+        this.measurementRepository = measurementRepository;
     }
 
     public Mono<List<AirPurityDailyAverage>> getDailyAverageBetween(BasicQuery basicQuery) {
@@ -45,5 +48,9 @@ public class AirPurityStatisticsService {
 
     public Mono<AirPurityMonthlyAverage> getLatestMonthlyAverage() {
         return monthlyAverageRepository.getLatestMeasurement();
+    }
+
+    public Mono<Integer> getNumberOfMeasurementsInDB() {
+        return measurementRepository.getNumberOfMeasurementsInDB();
     }
 }

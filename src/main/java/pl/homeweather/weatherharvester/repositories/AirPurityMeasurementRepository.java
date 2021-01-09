@@ -27,6 +27,9 @@ public interface AirPurityMeasurementRepository extends ReactiveCrudRepository<A
             "WHERE date < :#{#time}")
     Mono<Integer> getNumberOnMeasurementsToClean(LocalDateTime time);
 
+    @Query("SELECT count(id) FROM air_purity_measurement")
+    Mono<Integer> getNumberOfMeasurementsInDB();
+
     @Query("DELETE FROM air_purity_measurement " +
             "WHERE date < :#{#time}")
     void cleanupMeasurementsOlderThan(LocalDateTime time);
