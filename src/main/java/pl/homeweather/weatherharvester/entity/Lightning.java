@@ -1,5 +1,6 @@
 package pl.homeweather.weatherharvester.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,4 +17,11 @@ public class Lightning {
     private Double distance;
 
     private LocalDateTime date = LocalDateTime.now();
+
+    private static final Lightning emptyLightning = new Lightning();
+
+    @JsonIgnore
+    public boolean isNotEmpty() {
+        return !this.equals(emptyLightning);
+    }
 }

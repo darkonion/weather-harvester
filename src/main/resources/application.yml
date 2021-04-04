@@ -25,6 +25,8 @@ management:
         include: refresh, env, health
 
 harvester:
+  lightning_queue:
+    size: 6
   cleanup:
     months: 12
 
